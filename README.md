@@ -1,4 +1,20 @@
-# Ultimate React Boilerplate
+<p align="center">
+  <img src="./docs/readme-icon.svg" alt="Ultimate React Boilerplate icon" width="104" height="104" />
+</p>
+
+<h1 align="center">Ultimate React Boilerplate</h1>
+
+<p align="center">
+  <img src="https://cdn.simpleicons.org/react/61DAFB" alt="React" width="36" height="36" />
+  <img src="https://cdn.simpleicons.org/vite/646CFF" alt="Vite" width="36" height="36" />
+  <img src="https://cdn.simpleicons.org/reactrouter/CA4245" alt="React Router" width="36" height="36" />
+  <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" alt="Tailwind CSS" width="36" height="36" />
+  <img src="https://cdn.simpleicons.org/framer/0055FF" alt="Framer Motion" width="36" height="36" />
+</p>
+
+<p align="center">
+  <strong>React 18</strong> · <strong>Vite 8</strong> · <strong>Router Ready</strong> · <strong>Motion Enabled</strong>
+</p>
 
 <p align="center">
   Boilerplate React 18 + Vite yang rapi, ringan, dan siap dikembangkan.
