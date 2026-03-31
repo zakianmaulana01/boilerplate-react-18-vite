@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="./docs/readme-icon.svg" alt="Ultimate React Boilerplate icon" width="104" height="104" />
-</p>
-
 <h1 align="center">Ultimate React Boilerplate</h1>
 
 <p align="center">
