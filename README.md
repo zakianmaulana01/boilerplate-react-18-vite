@@ -1,10 +1,6 @@
 # Ultimate React Boilerplate
 
 <p align="center">
-  <img src="./docs/readme-icon.svg" alt="Ultimate React Boilerplate icon" width="96" height="96" />
-</p>
-
-<p align="center">
   Boilerplate React 18 + Vite yang rapi, ringan, dan siap dikembangkan.
 </p>
 
