@@ -1,0 +1,87 @@
+////////////////////////////////////////////////////////////////////////////
+// This is a "subclass" of GlgBase that provides a GLG script instance
+// used to implement GLG functionality of the GlgBase. The script loads
+// the GLG drawings and handles its behavior, data updates and and user
+// interaction.
+//
+// Parameters passed by the parent component:
+//   glg_div_name    - a unique name for the component's div element used
+//                     to display the GLG drawing.
+//   style           - specifies the component's width and height.
+////////////////////////////////////////////////////////////////////////////
+
+import { useRef } from 'react';
+import { isMobile } from 'react-device-detect';
+import GlgBase from './GlgBase.js';
+import { GlgDataCenter } from './glg_scripts/misc_demos/GlgDataCenter.js'
+
+/* eslint eqeqeq: 0 */
+
+function GlgDataCenterDemo( { glg_div_name, style, start_page } )
+{
+   const standalone = false;         // Script is used as a React component.
+
+   // Load drawings from the public/glg/misc_demos directory.
+   const glg_path = "glg/misc_demos";
+
+   /* A holder for the script instance to filled by the child.
+      It may be used to invoke script functions on button clicks.
+   */
+   var script_instance_ref = useRef( null );
+   if( script_instance_ref.current == null )
+     script_instance_ref.current = { instance : null };
+
+   /* Switch page on a button click in App.js. The demo may change its
+      displayed page itself, and this forces it to restore the start page
+      request by the parent button.
+   */
+   let script_instance = script_instance_ref.current.instance;
+   if( script_instance && script_instance.PageType &&
+       script_instance.PageType != start_page )
+     script_instance.LoadPageOfType( start_page );
+   
+   // onClick callback for the Change Size button.
+   const ChangeSize = ()=>{
+      let script_instance = script_instance_ref.current.instance;
+      if( script_instance )
+        script_instance.SetDrawingSize( true );
+   };
+    
+   // onClick callback for the Power and DataCenter buttons.
+   const SwitchPage = ( page_type )=>{
+      let script_instance = script_instance_ref.current.instance;
+      if( script_instance )
+        script_instance.LoadPageOfType( page_type );
+   };
+   
+   // Specifies the script to be used by the GlgBase component.
+   const script_constructor =
+     ()=>new GlgDataCenter( glg_div_name, glg_path, standalone, isMobile,
+                            start_page );
+
+   /* Pass glg_div_name and script_data as parameters to GlgBase. 
+      Hide the Change Size button on mobile devices.
+   */
+   return (
+            <>
+              { isMobile ? null :
+                  <button onClick={ ChangeSize } style={{margin: "3px"}}>
+                          Change Drawing Size</button>
+              }
+              <button onClick={ ()=>SwitchPage( "PowerMonitoring" ) }
+                      style={{margin: "3px"}}>Power Monitoring</button>
+                
+              <button onClick={ ()=>SwitchPage( "DataCenter" ) }
+                      style={{margin: "3px"}}>Data Center Monitoring</button>
+
+              <div id={glg_div_name + "_status_div"}
+                   style={{marginLeft: "3px", marginTop: "5px"}}> <br/> </div>
+
+              <GlgBase glg_div_name={glg_div_name}
+                       script_constructor={script_constructor}
+                       parent_instance_ref={script_instance_ref} />
+            </>
+          );
+}
+
+export default GlgDataCenterDemo;

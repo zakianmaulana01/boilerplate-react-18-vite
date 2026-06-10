@@ -1,8 +1,9 @@
 import { AnimatePresence } from 'framer-motion'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import MainLayout from '@/layouts/MainLayout'
-import About from '@/pages/About'
-import Home from '@/pages/Home'
+import CatalogPage from '@/pages/CatalogPage'
+import DemoDetailPage from '@/pages/DemoDetailPage'
+import { ThemeProvider } from '@/hooks/useTheme'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -11,8 +12,8 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route index element={<CatalogPage />} />
+          <Route path="demo/:demoId" element={<DemoDetailPage />} />
         </Route>
       </Routes>
     </AnimatePresence>
@@ -21,9 +22,11 @@ function AnimatedRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AnimatedRoutes />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AnimatedRoutes />
+      </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

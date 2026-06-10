@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  :root,
+  .light {
     --background: 210 40% 98%;
     --foreground: 222.2 47.4% 11.2%;
     --card: 0 0% 100%;
@@ -16,12 +17,40 @@
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+    --accent: 210 40% 94%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 1rem;
+
+    --canvas-bg: 210 40% 97%;
+    --canvas-grid: 215 25% 88%;
+    --canvas-panel: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 220 26% 8%;
+    --foreground: 210 40% 96%;
+    --card: 220 22% 11%;
+    --card-foreground: 210 40% 96%;
+    --popover: 220 22% 11%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 220 30% 10%;
+    --secondary: 220 16% 16%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 220 16% 14%;
+    --muted-foreground: 215 15% 65%;
+    --accent: 220 18% 18%;
+    --accent-foreground: 210 40% 96%;
+    --border: 220 16% 18%;
+    --input: 220 16% 18%;
+    --ring: 217 91% 60%;
+
+    --canvas-bg: 222 35% 6%;
+    --canvas-grid: 220 20% 18%;
+    --canvas-panel: 222 30% 10%;
   }
 
   * {
@@ -34,13 +63,14 @@
 
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
-    background-image:
-      radial-gradient(circle at top, hsl(var(--primary) / 0.12), transparent 28%),
-      radial-gradient(circle at bottom right, hsl(var(--foreground) / 0.08), transparent 22%);
     font-family:
       'Inter',
       'Segoe UI',
       sans-serif;
+    background-image:
+      radial-gradient(circle at top, hsl(var(--primary) / 0.08), transparent 28%),
+      radial-gradient(circle at bottom right, hsl(var(--foreground) / 0.04), transparent 22%);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   #root {
@@ -50,7 +80,64 @@
 
 @layer utilities {
   .bg-grid {
-    background-image: theme('backgroundImage.page-grid');
+    background-image:
+      linear-gradient(to right, hsl(var(--foreground) / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--foreground) / 0.04) 1px, transparent 1px);
     background-size: 36px 36px;
   }
+
+  .bg-canvas {
+    background-color: hsl(var(--canvas-bg));
+  }
+
+  .bg-canvas-panel {
+    background-color: hsl(var(--canvas-panel));
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }
+
+@layer components {
+  .panel {
+    @apply rounded-2xl border border-border bg-card text-card-foreground shadow-sm;
+  }
+  .panel-padded {
+    @apply p-4 md:p-5;
+  }
+}
+
+/* Shared SCADA animations */
+@keyframes scada-pump-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes scada-pipe-flow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+@keyframes scada-pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+@keyframes scada-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes scada-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scada-pump-spin { animation: scada-pump-spin 1.6s linear infinite; transform-origin: center; }
+.scada-blink { animation: scada-blink 1.2s ease-in-out infinite; }
+.scada-pulse-ring { animation: scada-pulse-ring 1.4s ease-out infinite; }
